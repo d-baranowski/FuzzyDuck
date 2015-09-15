@@ -39,6 +39,7 @@ public class Client
             BufferedReader br = new BufferedReader(isr);
             String message = br.readLine();
             System.out.println("Message received from the server : " +message);
+            //Test
         }
         catch (Exception exception)
         {
