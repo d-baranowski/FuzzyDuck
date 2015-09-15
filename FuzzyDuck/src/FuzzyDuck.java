@@ -9,12 +9,13 @@ public class FuzzyDuck {
 	public static Scanner keyboard = new Scanner(System.in);
 	public static String normalEntry;
 	public static String oppositeEntry;
+	public static boolean connected = false;
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		boolean proceed = false;
 		
-		System.out.println("Plase enter 'start' to start the game");
+		System.out.println("Plase enter 'start' to start the game or 'connect' to connect to a server");
 		while(!proceed){
 			proceed = initialPoint(keyboard.nextLine());
 		}
@@ -48,7 +49,17 @@ public class FuzzyDuck {
 				System.out.println(DF);
 			}
 			return true;
-		} else { 
+		} else if (input.contains("connect")){
+			String[] params = input.split(" ");
+			String ip = params[1];
+			int port = Integer.parseInt(params[2]);
+			new Thread(new Server()).start();
+			Client client = new Client();
+			client.connect(ip, port);
+			client.send("Heeeeeyaaaaa");
+			return false;
+		}
+		else { 
 			return false;
 		}
 	}

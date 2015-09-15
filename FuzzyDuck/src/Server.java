@@ -8,23 +8,20 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
  
-public class Server
+public class Server implements Runnable
 {
-	private static boolean started = false;
     private static Socket socket;
- 
-    public static void start(String[] args)
-    {
-    	started = true;
-        try
+     
+    @Override
+	public void run() {
+		try
         {
             int port = 25000;
             ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Server Started and listening to the port 25000");
+            System.out.println("Server Started and listening to the port " + port);
  
             //Server is running always. This is done using this while(true) loop
-            while(started)
-            {
+
                 //Reading the message from the client
                 socket = serverSocket.accept();
                 
@@ -33,7 +30,8 @@ public class Server
                 BufferedReader br = new BufferedReader(isr);
                 String msg = br.readLine();
                 System.out.println("Message received from client is "+msg);
-            }
+                reply("Server reply is " + msg);
+
         }
         catch (Exception e)
         {
@@ -47,10 +45,9 @@ public class Server
             }
             catch(Exception e){}
         }
-    }
+	}
     
-    public static void reply(String msg){
-    	//Multiplying the number by 2 and forming the return message
+    public void reply(String msg){
         String returnMessage = msg;
        
         //Sending the response back to the client.
